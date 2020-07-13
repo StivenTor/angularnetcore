@@ -44,6 +44,9 @@ export class PersonRemoteService {
 
 			const url = environment.SERVER_URL + "/api/Person/savePerson";
 
+			console.log("Mi url " + url)
+
+
 			this.httpClient.post(url, body, false).subscribe((result: any) => {
 				observer.next(result);
 				observer.complete();

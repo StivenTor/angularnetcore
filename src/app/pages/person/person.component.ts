@@ -29,9 +29,10 @@ export class PersonComponent implements OnInit, AfterViewInit {
   public displayedColumns = [
   "id",
   "name",
-  "lastname",
+  "lastName",
   "age",
-  "email"  
+  "email",
+  "action"
   ];
 
   public showDialog = false;
@@ -69,7 +70,8 @@ export class PersonComponent implements OnInit, AfterViewInit {
 
   loadPersons() {
     this.personService.getPersons().subscribe((result: any) => {
-      this.personTableDataSource.data = result.data.items;
+      console.log(result);
+      this.personTableDataSource.data = result.data;
     });
   }
 
@@ -122,7 +124,7 @@ export class PersonComponent implements OnInit, AfterViewInit {
 
       this.personService.updatePerson(dataForm)
       .subscribe((result: any) => {
-        if (result.status) {
+        if (result) {
           this.loadPersons();
           this.alertService.info("La información fue guardada con éxito");
           this.showDialog = false;
@@ -143,9 +145,14 @@ export class PersonComponent implements OnInit, AfterViewInit {
       };
 
 
+
+    const optionalData = {
+
+    };
+
       this.personService.savePerson(dataForm)
       .subscribe((result: any) => {
-        if (result.status) {
+        if (result) {
           this.loadPersons();
           this.alertService.info("La información fue guardada con éxito");
           this.showDialog = false;
@@ -185,7 +192,7 @@ export class PersonComponent implements OnInit, AfterViewInit {
     this.idPerson = person.id;
 
     this.personForm.controls.name.setValue(person.name);
-    this.personForm.controls.lastname.setValue(person.lastname);
+    this.personForm.controls.lastname.setValue(person.lastName);
     this.personForm.controls.age.setValue(person.age);
     this.personForm.controls.cellphone.setValue(person.cellphone);
     this.personForm.controls.address.setValue(person.address);

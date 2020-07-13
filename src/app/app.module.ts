@@ -2,7 +2,7 @@ import { HttpModule } from "@angular/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { HttpServiceInterceptor } from "./interceptor";
+
 import { MaterialModule } from "./material.module";
 import {
   MatProgressBarModule,
@@ -117,8 +117,7 @@ const rootRouting = RouterModule.forRoot(
     NgxQRCodeModule,
     NgImageSliderModule,
     EditorModule,
-    ChartModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    ChartModule
   ],
   providers: [
     HttpClientService,
@@ -135,15 +134,6 @@ const rootRouting = RouterModule.forRoot(
     {
       provide: MAT_DATE_LOCALE,
       useValue: "es-ES"
-    },
-    {
-     provide: HTTP_INTERCEPTORS,
-     useClass: HttpServiceInterceptor,
-     multi: true
-    },
-    {
-      provide: RECAPTCHA_SETTINGS,
-      useValue: { siteKey: environment.RECAPTCHA_SITE_KEY } as RecaptchaSettings,
     },
     {
       provide: RECAPTCHA_LANGUAGE,

@@ -22,14 +22,10 @@ export class HttpClientService {
 
     return Observable.create(observer => {
 
-      // let url = ConfigServiceProvider.apiUrl + endPoint;
       const cacheKey = url;
       const request = this.httpClient.get(url);
 
-      // if(cached){
-      //   // let response
-      //   request = this.cache.loadFromDelayedObservable(cacheKey, request, this.groupKey, this.ttl, this.delayType);
-      // }
+
       if (loading) {
         LoadingService.isLoading = true;
       }
@@ -62,13 +58,9 @@ export class HttpClientService {
   public post(url: string, body: any, cached: boolean) {
     return Observable.create(observer => {
 
-      // let url = ConfigServiceProvider.apiUrl + endPoint;
       const cacheKey = url;
       const request = this.httpClient.post(url, body);
 
-      // if(cached){
-      //   request = this.cache.loadFromDelayedObservable(cacheKey, request, this.groupKey, this.ttl, this.delayType);
-      // }
 
       LoadingService.isLoading = true;
 
@@ -89,9 +81,7 @@ export class HttpClientService {
 
           LoadingService.isLoading = false;
 
-          const messageArray = err.error.error.message.split("|");
-          err.error.error["message"] = messageArray.length > 2 ? messageArray[2] : err.error.error.message;
-          observer.next({ status: false, data: err.error.error });
+          observer.next({ status: false, data: err });
           observer.complete();
         },
         () => { }
@@ -106,10 +96,6 @@ export class HttpClientService {
 
     return Observable.create(observer => {
 
-      // const customHeader = new Headers();
-      // customHeader.append("Content-Type", "multipart/form-data");
-      // customHeader.append("Accept", "application/json");
-
       const httpOptions = {
         headers: new HttpHeaders({
           "Accept": "application/json"
@@ -119,13 +105,7 @@ export class HttpClientService {
       const formData: FormData = new FormData();
       formData.append(parameter, file, file.name);
 
-      // let url = ConfigServiceProvider.apiUrl + endPoint;
-      // const cacheKey = url;
       const request = this.httpClient.post(url, formData, httpOptions);
-
-      // if(cached){
-      //   request = this.cache.loadFromDelayedObservable(cacheKey, request, this.groupKey, this.ttl, this.delayType);
-      // }
 
       LoadingService.isLoading = true;
 
@@ -133,7 +113,6 @@ export class HttpClientService {
         (data: any) => {
 
           LoadingService.isLoading = false;
-          // data["message"] = "";
           if (data.message && data.message !== "") {
             const messageArray = data.message.split("|");
             data["message"] = messageArray.length > 2 ? messageArray[2] : data.message;
@@ -147,8 +126,6 @@ export class HttpClientService {
 
           console.log(err);
 
-          // const messageArray = err.message ? err.message : err.error.error.message.split("|");
-          // err.error.error["message"] = messageArray.length > 2 ? messageArray[2] : err.error.error.message;
 
           observer.next({ status: false, data: err.error.error });
           observer.complete();
@@ -158,34 +135,6 @@ export class HttpClientService {
 
     });
 
-    // // const file: File = fileList[0];
-    // const formData: FormData = new FormData();
-    // formData.append(parameter, file, file.name);
-    // const headers = new Headers();
-    // /** In Angular 5, including the header Content-Type can invalidate your request */
-    // headers.append("Content-Type", "multipart/form-data");
-    // headers.append("Accept", "application/json");
-    // const options = new RequestOptions(); // { headers: headers }
-    // const request = this.httpClient.post(url, formData, options);
-    //   // .map(res => res.json())
-    //   // .catch(error => Observable.throw(error))
-    //   // .subscribe(
-    //   //   data => console.log("success"),
-    //   //   error => console.log(error)
-    //   // );
-
-    // const formData = new FormData();
-    // formData.append("upload", file);
-
-    // const params = new HttpParams();
-
-    // const options = {
-    //   params: params,
-    //   reportProgress: true,
-    // };
-
-    // const req = new HttpReques("POST", url, formData, options);
-    // return this.httpClient.request(req);
   }
 
 }

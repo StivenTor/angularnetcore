@@ -67,6 +67,12 @@
 
             <mat-grid-tile>
               <mat-form-field class="">
+                <input matInput type="text" formControlName="address" placeholder="Direccion" [readonly]="editReadOnly">
+              </mat-form-field>
+            </mat-grid-tile>            
+
+            <mat-grid-tile>
+              <mat-form-field class="">
                 <input matInput type="text" formControlName="email" placeholder="Correo" [readonly]="editReadOnly">
               </mat-form-field>
             </mat-grid-tile>    
@@ -98,9 +104,9 @@
         <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="lastname">
+      <ng-container matColumnDef="lastName">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.lastname}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.lastName}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="age">
@@ -115,7 +121,7 @@
 
      
 
-      <ng-container matColumnDef="usr_action" mat-sort-header>
+      <ng-container matColumnDef="action" mat-sort-header>
         <mat-header-cell *matHeaderCellDef style="flex: 0 0 40px;"> </mat-header-cell>
         <mat-cell *matCellDef="let element" style="flex: 0 0 40px;">
 

@@ -1,0 +1,8 @@
+.c-div-buttons {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    background-color: #fafafa;
+}
+
+::ng-deep .mat-sidenav-container{
+    height:100vh !important; /* or 100% */
+}

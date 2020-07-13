@@ -1,0 +1,38 @@
+<!-- <h1 mat-dialog-title class="center-horizontal">
+  <i class="material-icons" style="font-size:80px; color: #3f4ebb">
+    info
+  </i>
+  <div>Movil Repuestos</div>
+</h1> -->
+<div mat-dialog-content>
+
+  <div id="print-section">
+    <h1 class="center-horizontal" style="font-size:20px;">
+      <i class="material-icons" style="font-size:80px; color: #3f4ebb">
+        info
+      </i>
+      <div>Mrn Colombia</div>
+    </h1>
+
+    <!-- <p>What's your favorite animal?</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.animal">
+  </mat-form-field> -->
+
+    <!--  -->
+    <mat-list role="list">
+      <mat-list-item role="listitem">Id de recarga: {{data.idTransaccion}}</mat-list-item>
+      <mat-list-item role="listitem">Fecha: {{data.fechaStr}} {{data.hora}}</mat-list-item>
+      <mat-list-item role="listitem">Número: {{data.celular}}</mat-list-item>
+      <mat-list-item role="listitem">Monto: {{data.valor | currency}}</mat-list-item>
+      <mat-list-item role="listitem">Código autorización: {{data.idTransaccionProveedor}}</mat-list-item>
+    </mat-list>
+  </div>
+
+
+</div>
+<div mat-dialog-actions class="center-horizontal" align="center">
+  <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Aceptar</button>
+  <!-- <button mat-raised-button (click)="onNoClick()">Imprimir</button> -->
+  <button mat-raised-button printSectionId="print-section" [useExistingCss]="true" ngxPrint>Imprimir</button>
+</div>

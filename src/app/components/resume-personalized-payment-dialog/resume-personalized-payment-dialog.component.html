@@ -1,0 +1,23 @@
+<div mat-dialog-content> 
+
+  <div id="print-section">
+    <h1 class="center-horizontal" style="font-size:20px;">
+      <i class="material-icons" style="font-size:80px; color: #3f4ebb">
+        info
+      </i>
+      <div>Mrn Colombia</div>
+    </h1>
+
+    <mat-list role="list">
+      <mat-list-item role="listitem">N° aprobación del Banco: {{data.reference}}</mat-list-item>
+      <mat-list-item role="listitem">Fecha de Consignación: {{data.fechaStr | date: 'dd/MM/yyyy'}}</mat-list-item>
+      <mat-list-item role="listitem">Valor Consignado: {{data.valueConsignement | currency}}</mat-list-item>      
+      <mat-list-item role="listitem">Valor Créditos: {{data.valueCredit | currency}}</mat-list-item>
+      <mat-list-item role="listitem">Valor Contado: {{data.valueCash | currency}}</mat-list-item>
+    </mat-list>
+  </div>
+</div>
+<div mat-dialog-actions class="center-horizontal" align="center">
+  <button mat-raised-button color="indigo" (click)="dialogRef.close(false)">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="dialogRef.close(true)">Aceptar</button>
+</div>

@@ -1,0 +1,9 @@
+<div *ngIf="control.touched && control.errors" >
+	<div class="input-tooltiped error-input">
+		<span *ngIf="control.errors.required" class="" >El campo ({{name}}) es requerido</span>
+
+		<span *ngIf=" control.errors.minlength" class="" >El campo ({{name}}) debe tener minimo {{min}}</span>
+
+		<span *ngIf=" control.errors.maxLength" class="" >El campo ({{name}}) debe tener maximo {{max}}</span>
+	</div>
+</div>

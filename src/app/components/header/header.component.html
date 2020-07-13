@@ -1,0 +1,65 @@
+<nav class="header white black-text">
+	<div class="nav-wrapper ">
+		<a href="#" class="brand-logo">
+			<img src="assets/images/logo.jpg" class="logo">
+		</a>
+		<ul id="nav-mobile" class="right hide-on-med-and-down">
+			<li>
+				<a class="dropdown-trigger" data-target='user-actions'>
+					Bienvenido {{user.user.usr_names}} {{user.user.usr_surnames}} {{dateFormat}}
+				</a>
+				<!-- Dropdown Structure -->
+				<div id='user-actions' class='dropdown-content user-actions' style="min-width: 300px;    box-shadow: 0 0 150px rgba(0, 0, 0, 0.62);">
+					<div class="user-details">
+						<div class="detail">
+							<h2>{{user.user.usr_names}} {{user.user.usr_surnames}}</h2>
+						</div>
+						<div class="detail">Identificación: {{user.user.usr_document}}</div>
+						<div class="detail">Usuario: {{user.user.usr_userName}}</div>
+						<div class="detail">{{user.user.usr_email}}</div>
+					</div>
+					<div class="user-actions-b">
+						<div class="row">
+							<div class="col s6">
+								<a class="action-user modal-trigger" href="openChangePasswordModal()">
+									Cambiar Contraseña XXX
+								</a>
+							</div>
+							<div class="col s6">
+								<a class="action-user" (click)="user.logout()">
+									Cerrar sesión
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+<div id="modal1" class="modal">
+	<div class="modal-content">
+		<h4>Cambiar Contraseña</h4>
+		<div>
+			<div class="input-field">
+				<input id="c_c" type="password" name="password_old" #C1>
+				<label for="c_c">Contraseña actual</label>
+			</div>
+
+			<div class="input-field">
+				<input id="c_a" type="password" name="password" #C2>
+				<label for="c_a">Contraseña nueva</label>
+			</div>
+
+			<div class="input-field">
+				<input id="c_a_c" type="password" name="password_confirm" #C3>
+				<label for="c_a_c">Confirmar contraseña nueva</label>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+		<a href="#!" class="modal-action waves-effect waves-green btn blue" (click)="changePassword(C1.value, C2.value, C3.value)">Cambiar Contraseña</a>
+	</div>
+</div>

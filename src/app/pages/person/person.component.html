@@ -1,0 +1,140 @@
+<mat-toolbar class="toolbar-page">
+  <h2>Personas</h2>
+</mat-toolbar>
+
+<div class="container page">
+  <div class="mat-elevation-z4">
+
+    <div class="example-header">
+      <div class="o-flex flex-wrap">
+
+        <div class="o-flexbox o-flex-1 u-h-full o-flex-align-items-center filter-table center-vertical">
+
+          <div class="inline">
+            <i class="material-icons pointer action">search</i>
+          </div>
+          <mat-form-field class="inline" style="width: 100%;">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar personas por id, nombre, apellido, edad o correo">
+          </mat-form-field>
+        </div>
+
+        <div class="o-flexbox u-h-full o-flex-align-items-right filter-table center-vertical actions-table">
+          <div class="inline">
+            <a mat-raised-button color="indigo" (click)="addUser()">Agregar Persona</a>
+          </div>
+          <div class="inline">
+            <i class="material-icons pointer action" (click)="loadPersons()">refresh</i>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="form-box mat-elevation-z8" *ngIf="showDialog">
+      <form [formGroup]="personForm" (ngSubmit)="personFormSubmit()" autocomplete="off">
+        <div class="modal-content">
+          <h4>{{!idUser ? 'Crear un Persona' : editReadOnly ? 'Consultar Persona' : 'Editar Persona'}}</h4>
+
+          <!-- <div>
+              <div class="row"> -->
+
+          <mat-grid-list cols="2" rowHeight="70px">
+
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput formControlName="name" placeholder="Nombre" [readonly]="editReadOnly">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput type="text" formControlName="lastname" placeholder="Apellidos" [readonly]="editReadOnly">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field class="">
+                <input matInput type="text" formControlName="age" placeholder="Edad" [readonly]="editReadOnly">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field class="">
+                <input matInput type="text" formControlName="cellphone" placeholder="Celular" [readonly]="editReadOnly">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field class="">
+                <input matInput type="text" formControlName="email" placeholder="Correo" [readonly]="editReadOnly">
+              </mat-form-field>
+            </mat-grid-tile>    
+          </mat-grid-list>        
+            
+        </div>
+        <div class="modal-footer pointer form-modal-footer">
+          <a class="" (click)="showDialog = false">
+            {{!editReadOnly ? 'Cancelar' : 'Cerrar'}}
+          </a>
+
+
+          <button mat-raised-button color="primary" type="submit" *ngIf="!editReadOnly">
+            {{!idUser ? 'Crear Persona' : 'Editar Persona'}}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <mat-table #table [dataSource]="personTableDataSource" matSort>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="lastname">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.lastname}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="age">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Edad </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.age}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Correo </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+      </ng-container>
+
+     
+
+      <ng-container matColumnDef="usr_action" mat-sort-header>
+        <mat-header-cell *matHeaderCellDef style="flex: 0 0 40px;"> </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="flex: 0 0 40px;">
+
+          <div class="show_hover_table">
+            <button mat-icon-button [matMenuTriggerFor]="appMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </div>
+
+          <mat-menu #appMenu="matMenu">
+            <button mat-menu-item (click)="editPerson(element, false)">Editar Persona</button>
+            <button mat-menu-item (click)="editPerson(element, true)">Consultar Persona</button>
+          </mat-menu>
+
+        </mat-cell>
+      </ng-container>
+
+
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+    </mat-paginator>
+
+  </div>
+</div>

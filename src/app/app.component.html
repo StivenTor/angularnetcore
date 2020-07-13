@@ -1,0 +1,75 @@
+<ng-container>
+
+  <mat-toolbar class="header mat-elevation-z3" *ngIf="contextService.auth">
+
+
+    <div class="o-flexbox o-flex-1 u-h-full o-flex-align-items-center">
+      <button mat-button (click)="sidenav.toggle()">Menu</button>
+      <a href="#" class="brand-logo">
+        <img src="assets/images/logo.png" class="logo">
+      </a>
+    </div>
+
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li class="relative-pos">
+        <a><img  src="{{contextService.urlImageNotification}}" style="margin: 15px; width: 30px; height: 30px;" 
+          (click)="openNotifications()"></a>
+        <a *ngIf="contextService.user.usr_viewBalance">
+          Mi saldo: <span id='number-default'>{{contextService.balance | number:'4.0-0':'pt'}}</span>
+        </a>
+        <a mat-button (click)="showActions = !showActions" (clickOutside)="showActions = false">
+          Bienvenido {{contextService.user.usr_name}}
+        </a>
+
+        <mat-card *ngIf="showActions" style=" position: absolute; right:0;">
+          <mat-card-content style="width: 300px;">
+            <h2>{{contextService.user.usr_name }}</h2>
+          </mat-card-content>
+          <mat-card-content style="width: 300px;" *ngIf="contextService.user.usr_distributor">
+            <h2>{{contextService.user.usr_distributorName}}</h2>
+          </mat-card-content>
+          <mat-card-content style="width: 300px;" *ngIf="contextService.user.usr_commerce">
+            <h2>{{contextService.user.usr_commerceName}}</h2>
+          </mat-card-content>
+          <mat-card-content>
+            <div>Identificacion: {{contextService.user.usr_document}}</div>
+            <div>Usuario: {{contextService.user.usr_userName}}</div>
+            <div>{{contextService.user.usr_email}}</div>
+            <div>{{contextService.user.usr_nameRole}}</div>
+          </mat-card-content>
+          <mat-card-actions>
+            <div class="c-div-buttons o-flexbox u-padding-16">
+              <div class="o-flexbox o-flex-1 o-just-cont-flex-start">
+                <a mat-button (click)="openChangePasswordModal()">Cambiar Contraseña</a>
+              </div>
+              <div class="o-flexbox o-flex-1 o-just-cont-flex-start">
+                <a mat-button (click)="userService.logout()">Cerrar sesión</a>
+              </div>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+
+      </li>
+    </ul>
+
+  </mat-toolbar>
+
+  <mat-sidenav-container>
+
+    <mat-sidenav #sidenav mode="{{navMode}}" opened="{{navOpened}}" class="mat-elevation-z8" 
+                *ngIf="contextService.auth"
+                [fixedInViewport]="true" [fixedTopGap]="0" [fixedBottomGap]="0">
+      <app-menu></app-menu>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+
+</ng-container>
+
+<div class="loading-overlay" [hidden]="!isLoading()">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>

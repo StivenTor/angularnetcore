@@ -1,0 +1,98 @@
+  <div id="slide-out" class="sidenav sidenav-fixed">
+
+
+  <mat-accordion class="mb">
+    <div class="men">      
+      <mat-expansion-panel hideToggle = "true" >
+          <mat-expansion-panel-header style="padding: 0 18px 0 0px !important;">
+            <mat-panel-title>
+              <div class="men" style="padding: 0px; !important;">
+                <a  [routerLink]="['/']">
+                  <i class="material-icons">home</i>
+                  <span class="men-name">Inicio</span>
+                </a>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>          
+      </mat-expansion-panel>
+    </div>
+
+
+    <!-- <ng-content></ng-content> -->
+    <div *ngFor="let item of menu" class="men">
+
+      <mat-expansion-panel *ngIf="item.type == 'sub'" >
+        <mat-expansion-panel-header style="padding: 0 18px 0 0px !important;">
+          <mat-panel-title>
+            <div class="men" style="padding: 0px !important;">
+              <a>
+                <i class="material-icons">{{item.icon}}</i>
+                <span class="men-name">{{item.name}}</span>
+              </a>
+            </div>
+          </mat-panel-title>          
+        </mat-expansion-panel-header>
+
+        <mat-action-row *ngFor="let submenu of item.children" class="men" style="padding: 0px !important;">
+          <div class="men" style="padding: 0px !important;">
+            <a [routerLink]="['/'+submenu.state]">
+                <span class="men-name">{{submenu.name}}</span>
+            </a>
+          </div>
+        </mat-action-row>
+      </mat-expansion-panel>
+       
+      <mat-expansion-panel *ngIf="item.type != 'sub'" hideToggle = "true" >
+        <mat-expansion-panel-header style="padding: 0 18px 0 0px !important;">
+          <mat-panel-title>
+            <div class="men" style="padding: 0px !important;">
+              <a [routerLink]="['/'+item.state]">
+                <i class="material-icons">{{item.icon}}</i>
+                <span class="men-name">{{item.name}}</span>
+              </a>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+        <!--<div *ngIf="item.type == 'sub'">
+            <a class="subheader" >{{item.name}}</a>
+                
+            <div *ngFor="let submenu of item.children" class="men">
+                <a [routerLink]="['/'+submenu.state]" >
+                  <i class="material-icons">security</i>
+                   <span class="men-name">{{submenu.name}}</span>
+                </a>
+            </div>
+        </div>
+        
+        <div *ngIf="item.type != 'sub'">
+            <a  [routerLink]="['/'+item.state]" >
+              <i class="material-icons">security</i>
+               <span class="men-name">{{item.name}}</span>
+            </a>
+        </div>-->
+
+         <div class="divider"></div>
+        
+    </div>
+
+
+    <div class="men">      
+      <mat-expansion-panel hideToggle = "true">
+          <mat-expansion-panel-header style="padding: 0 18px 0 0px !important;" >
+            <mat-panel-title>
+              <div class="men" style="padding: 0px; !important;">
+                <a  (click)="user.logout()">
+                  <i class="material-icons">exit_to_app</i>
+                  <span class="men-name">Cerrar Sesión</span>
+                </a>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>          
+      </mat-expansion-panel>
+    </div>
+  </mat-accordion>
+
+  </div>
+        

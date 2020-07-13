@@ -20,7 +20,7 @@
 
         <div class="o-flexbox u-h-full o-flex-align-items-right filter-table center-vertical actions-table">
           <div class="inline">
-            <a mat-raised-button color="indigo" (click)="addUser()">Agregar Persona</a>
+            <a mat-raised-button color="indigo" (click)="addPerson()">Agregar Persona</a>
           </div>
           <div class="inline">
             <i class="material-icons pointer action" (click)="loadPersons()">refresh</i>
@@ -88,6 +88,11 @@
 
     <mat-table #table [dataSource]="personTableDataSource" matSort>
 
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
@@ -123,6 +128,7 @@
           <mat-menu #appMenu="matMenu">
             <button mat-menu-item (click)="editPerson(element, false)">Editar Persona</button>
             <button mat-menu-item (click)="editPerson(element, true)">Consultar Persona</button>
+            <button mat-menu-item (click)="deletePerson(element, true)">Borrar Persona</button>
           </mat-menu>
 
         </mat-cell>

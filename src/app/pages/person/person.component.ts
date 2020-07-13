@@ -35,7 +35,6 @@ export class PersonComponent implements OnInit, AfterViewInit {
   ];
 
   public showDialog = false;
-  // public loading = true;
   public personForm: any;
   public model: any;
   public idPerson: string;
@@ -57,7 +56,6 @@ export class PersonComponent implements OnInit, AfterViewInit {
       age: new FormControl("", [Validators.required]),
       cellphone: new FormControl("", []),
       address: new FormControl("", []),
-      neighborhood: new FormControl("", []),
       email: new FormControl("", [
         Validators.required,
         FormValidatorService.emailCheck()
@@ -109,16 +107,53 @@ export class PersonComponent implements OnInit, AfterViewInit {
     };
 
 
-    this.personService.savePerson(dataForm)
-    .subscribe((result: any) => {
-      if (result.status) {
-        this.loadPersons();
-        this.alertService.info(result.data.message);
-        this.showDialog = false;
-      } else {
-        this.alertService.error(result.data.message);
-      }
-    });
+    if (this.idPerson) {
+
+      const dataForm = {
+        id: this.idPerson,
+        name: this.personForm.controls.name.value,
+        lastname: this.personForm.controls.lastname.value,
+        age: this.personForm.controls.age.value,
+        address: this.personForm.controls.address.value,
+        cellphone: this.personForm.controls.cellphone.value,
+        email: this.personForm.controls.email.value,
+      };
+
+
+      this.personService.updatePerson(dataForm)
+      .subscribe((result: any) => {
+        if (result.status) {
+          this.loadPersons();
+          this.alertService.info("La información fue guardada con éxito");
+          this.showDialog = false;
+        } else {
+          this.alertService.error("Error");
+        }
+      });
+
+    }else{
+
+      const dataForm = {
+        name: this.personForm.controls.name.value,
+        lastname: this.personForm.controls.lastname.value,
+        age: this.personForm.controls.age.value,
+        address: this.personForm.controls.address.value,
+        cellphone: this.personForm.controls.cellphone.value,
+        email: this.personForm.controls.email.value,
+      };
+
+
+      this.personService.savePerson(dataForm)
+      .subscribe((result: any) => {
+        if (result.status) {
+          this.loadPersons();
+          this.alertService.info("La información fue guardada con éxito");
+          this.showDialog = false;
+        } else {
+          this.alertService.error("Error");
+        }
+      });
+    }
   }
 
   addPerson() {
@@ -128,53 +163,37 @@ export class PersonComponent implements OnInit, AfterViewInit {
     this.showDialog = true;
   }
 
-  /*editPerson(user, readOnly) {
-    this.idPerson = user.usr_idUser;
+  deletePerson(element){
 
-    this.userForm.controls.username.setValue(user.usr_userName);
-    this.userForm.controls.doc_type.setValue(user.usr_codeTypeDocument);
-    this.userForm.controls.doc_number.setValue(user.usr_document);
-    this.userForm.controls.name.setValue(user.usr_name);
+    const dataForm = {
+      id: element.id
+    };    
 
-    this.userForm.controls.codeCity.setValue(String(user.usr_codeCity));
-    this.currentCity = user.usr_codeCity;
+    this.personService.deletePerson(dataForm)
+    .subscribe((result: any) => {
+      if (result.status) {
+        this.loadPersons();
+        this.alertService.info("Persona borrada con éxito");
+        this.showDialog = false;
+      } else {
+        this.alertService.error("Error");
+      }
+    });
+  }
 
-    if (user.usr_cellPhone == null || user.usr_cellPhone === "null") {
-      this.userForm.controls.cellphone.setValue("");
-    } else {
-      this.userForm.controls.cellphone.setValue(user.usr_cellPhone);
-    }
+  editPerson(person, readOnly) {
+    this.idPerson = person.id;
 
-    if (user.usr_phone == null || user.usr_phone === "null") {
-      this.userForm.controls.phone.setValue("");
-    } else {
-      this.userForm.controls.phone.setValue(user.usr_phone);
-    }
-
-    if (user.usr_suburb == null || user.usr_suburb === "null") {
-      this.userForm.controls.neighborhood.setValue("");
-    } else {
-      this.userForm.controls.neighborhood.setValue(user.usr_suburb);
-    }
-
-    if (user.usr_adress == null || user.usr_adress === "null") {
-      this.userForm.controls.address.setValue("");
-    } else {
-      this.userForm.controls.address.setValue(user.usr_adress);
-    }
-
-    this.userForm.controls.email.setValue(user.usr_email);
-    this.userForm.controls.role.setValue(String(user.usr_codeRole));
-    this.userForm.controls.token.setValue(user.usr_utoken);
-    this.userForm.controls.status.setValue(user.usr_status);
-    this.userForm.controls.balance.setValue(user.usr_viewBalance);
-    this.userForm.controls.vendor.setValue(user.usr_vendor);
-    this.userForm.controls.collector.setValue(user.usr_collector);
-
+    this.personForm.controls.name.setValue(person.name);
+    this.personForm.controls.lastname.setValue(person.lastname);
+    this.personForm.controls.age.setValue(person.age);
+    this.personForm.controls.cellphone.setValue(person.cellphone);
+    this.personForm.controls.address.setValue(person.address);
+    this.personForm.controls.email.setValue(person.email);
     
 
     this.showDialog = true;
     this.editReadOnly = readOnly;
-  }*/
+  }
 
 }
